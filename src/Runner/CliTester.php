@@ -57,8 +57,8 @@ class CliTester
 		}
 
 		$runner = $this->createRunner();
-		$runner->setEnvironmentVariable(Environment::RUNNER, '1');
-		$runner->setEnvironmentVariable(Environment::COLORS, (string) (int) Environment::$useColors);
+		$runner->setEnvironmentVariable(Environment::VariableRunner, '1');
+		$runner->setEnvironmentVariable(Environment::VariableColors, (string) (int) Environment::$useColors);
 
 		$this->installInterruptHandler();
 
@@ -261,14 +261,14 @@ class CliTester
 
 		[$engine, $version] = reset($engines);
 
-		$runner->setEnvironmentVariable(Environment::COVERAGE, $file);
-		$runner->setEnvironmentVariable(Environment::COVERAGE_ENGINE, $engine);
+		$runner->setEnvironmentVariable(Environment::VariableCoverage, $file);
+		$runner->setEnvironmentVariable(Environment::VariableCoverageEngine, $engine);
 
-		if ($engine === CodeCoverage\Collector::ENGINE_XDEBUG && version_compare($version, '3.0.0', '>=')) {
+		if ($engine === CodeCoverage\Collector::EngineXdebug && version_compare($version, '3.0.0', '>=')) {
 			$runner->addPhpIniOption('xdebug.mode', ltrim(ini_get('xdebug.mode') . ',coverage', ','));
 		}
 
-		if ($engine === CodeCoverage\Collector::ENGINE_PCOV && count($this->options['--coverage-src'])) {
+		if ($engine === CodeCoverage\Collector::EnginePcov && count($this->options['--coverage-src'])) {
 			$runner->addPhpIniOption('pcov.directory', Helpers::findCommonDirectory($this->options['--coverage-src']));
 		}
 
